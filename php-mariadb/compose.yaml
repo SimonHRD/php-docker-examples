@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mariadb
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
+      - TZ=Europe/Zurich
+    restart: always
+    volumes:
+      - db-vol:/var/lib/mysql
+      - ./src/db-init.sql:/docker-entrypoint-initdb.d/db-init.sql:ro  # Mount SQL script
+
+  pma:
+    image: phpmyadmin
+    environment:
+      - PMA_HOST=db
+    ports:
+      - "6080:80"
+    restart: on-failure:10
+    depends_on:
+      - db
+
+  php-env:
+    build: .
+    volumes:
+      - ./src:/var/www/html/
+    ports:
+      - 9001:80
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=${DB_PASSWORD}
+
+volumes:
+  db-vol:

@@ -1,0 +1,12 @@
+vendor/
+src/vendor/
+.git/
+.gitignore
+.env
+README.md
+*.log
+*.swp
+*.swo
+.vscode/
+.idea/
+docker-compose.override.yml

@@ -1,0 +1,7 @@
+services:
+  php-env:
+    image: php:8.4-apache
+    volumes:
+      - ./src:/var/www/html/
+    ports:
+      - "9001:80"
