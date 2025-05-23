@@ -51,8 +51,11 @@ Then open in the browser:
 
 
 ## How It Works
-- Uses the official php:8.4-apache image with required extensions (pdo, pdo_mysql, mysqli) via Dockerfile
-- Connects to a mariadb container defined in compose.yaml
-- Initializes the database using db-init.sql
-- GUI management via phpMyAdmin
-- DB credentials and settings are defined in the .env file
+- Multi-stage Dockerfile builds:
+    - Stage 1: Installs Composer dependencies
+    - Stage 2: Development image with mounted volumes and live reload
+    - Stage 3: Production image with static code baked in
+- Uses the official mongo image for the database
+- Seeds the database with mongo-init/init.js
+- Provides Mongo Express UI to manage MongoDB in the browser
+- DB credentials are stored in .env
